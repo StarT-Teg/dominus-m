@@ -17,15 +17,6 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
 
-      - run: |
-          env:
-            GH_TOKEN: ${{ github.token }}
-          gh issue --repo ${{ github.repository }} \
-            create --title "Issue title" --body "Issue body"
-          env:
-            VITE_BOT_KEY: ${{ secrets.VITE_BOT_KEY }}
-#          VITE_CHAT_ID: ${{ secrets.VITE_CHAT_ID }}
-
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
 

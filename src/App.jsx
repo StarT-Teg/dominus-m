@@ -38,9 +38,9 @@ function App() {
     const [songList, setSongList] = useState([])
 
     const getUpdates = () => {
-        const botKey = import.meta.env.VITE_BOT_KEY
-        const chatId = import.meta.env.VITE_CHAT_ID
-        console.log('botKey:', botKey)
+        const botKey = 'bot1298020317:AAHrgU__t5IPreTPsJCTgNIdylsioarMEMw'
+        const chatId = '-1002394078163'
+
         axios.post(
             `https://api.telegram.org/${botKey}/getUpdates`,
             {
