@@ -21,7 +21,7 @@ jobs:
           gh issue --repo ${{ github.repository }} \
             create --title "Issue title" --body "Issue body"
           env:
-          GH_TOKEN: ${{ secrets.BOT_KEY,  secrets.CHAT_ID }}
+          GH_TOKEN: ${{ secrets.BOT_KEY;  secrets.CHAT_ID }}
 
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
