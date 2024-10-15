@@ -5,7 +5,7 @@ import FlipMove from "react-flip-move";
 
 
 const SongLine = forwardRef(({songName, position, rating}, ref) => {
-    const songAvatarUrl = `/${songName.toLowerCase().replaceAll(' ', '_')}.png`
+    const songAvatarUrl = `${import.meta.env.BASE_URL}/${songName.toLowerCase().replaceAll(' ', '_')}.png`
 
     return (
         <div className={'songLine'} ref={ref}>
@@ -13,7 +13,7 @@ const SongLine = forwardRef(({songName, position, rating}, ref) => {
             <div className={'songLineName'}>
                 <img src={songAvatarUrl} className={'songLineAvatar'} onError={(e) => {
                     e.target.onError = null;
-                    e.target.src = '/vite.svg'
+                    e.target.src = `${import.meta.env.BASE_URL}/vite.svg`
                 }} alt=""/>
                 {songName}
             </div>
@@ -38,9 +38,9 @@ function App() {
     const [songList, setSongList] = useState([])
 
     const getUpdates = () => {
-        const botKey = 'bot1298020317:AAHrgU__t5IPreTPsJCTgNIdylsioarMEMw'
-        const chatId = '-1002394078163'
-
+        const botKey = import.meta.env.VITE_BOT_KEY
+        const chatId = import.meta.env.VITE_CHAT_ID
+        console.log('botKey:', botKey)
         axios.post(
             `https://api.telegram.org/${botKey}/getUpdates`,
             {

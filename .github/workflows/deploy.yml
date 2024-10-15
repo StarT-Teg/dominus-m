@@ -17,6 +17,9 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
 
+      - env:
+          GH_TOKEN: ${{ secrets.BOT_KEY,  secrets.CHAT_ID }}
+
       - name: Install dependencies
         uses: bahmutov/npm-install@v1
 
