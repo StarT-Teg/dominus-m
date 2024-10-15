@@ -6,6 +6,7 @@
   "homepage": "https://start-teg.github.io/dominus-m/",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
