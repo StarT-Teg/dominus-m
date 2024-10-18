@@ -32,40 +32,44 @@ const getSongNameFromText = (text) => {
 function App() {
     const {data, refetch} = useGetData();
 
-    const commentsData = data?.result?.reduce((acc, updateData) => {
-
-        const message = updateData?.edited_message || updateData?.message
-
-        if (!!message?.reply_to_message) {
-            const songName = getSongNameFromText(message?.reply_to_message?.text);
-            const senderName = message?.from?.first_name || message?.from?.username || '';
-            let rating = message?.text?.replaceAll(',', '.').replace(/[^0-9.]/g, '');
-
-            if (!Number.isNaN(rating)) {
-                const ratingFormatted = Number(rating);
-                if (ratingFormatted > 10) {
-                    rating = 10;
-                } else if (ratingFormatted < 0) {
-                    rating = 0;
-                } else {
-                    rating = ratingFormatted;
-                }
-            } else {
-                return acc;
-            }
-
-            return {
-                ...acc, [songName]: {
-                    ...acc?.[songName], [senderName]: rating,
-                }
-            }
-        }
-
-        return acc;
-    }, {});
+    const [commentsData, setCommentsData] = useState({});
     const songListInitialOrder = Object.keys(commentsData || {})
     const [sortType, setSortType] = useState('songNumber');
     const [songList, setSongList] = useState([])
+
+    useEffect(() => {
+        setCommentsData(data?.result?.reduce((acc, updateData) => {
+
+            const message = updateData?.edited_message || updateData?.message
+
+            if (!!message?.reply_to_message) {
+                const songName = getSongNameFromText(message?.reply_to_message?.text);
+                const senderName = message?.from?.first_name || message?.from?.username || '';
+                let rating = message?.text?.replaceAll(',', '.').replace(/[^0-9.]/g, '');
+
+                if (!Number.isNaN(rating)) {
+                    const ratingFormatted = Number(rating);
+                    if (ratingFormatted > 10) {
+                        rating = 10;
+                    } else if (ratingFormatted < 0) {
+                        rating = 0;
+                    } else {
+                        rating = ratingFormatted;
+                    }
+                } else {
+                    return acc;
+                }
+
+                return {
+                    ...acc, [songName]: {
+                        ...acc?.[songName], [senderName]: rating,
+                    }
+                }
+            }
+
+            return acc;
+        }, {}))
+    }, [data])
 
     useEffect(() => {
         if (!commentsData) {
