@@ -5,13 +5,13 @@ import FlipMove from "react-flip-move";
 
 
 const SongLine = forwardRef(({songName, position, rating}, ref) => {
-    const songAvatarUrl = `${import.meta.env.BASE_URL}/${songName.toLowerCase().replaceAll(' ', '_')}.png`
+    const songAvatarUrl = `${import.meta.env.BASE_URL}/${songName.toLowerCase().replaceAll(' ', '_')}.webp`
 
     return (
         <div className={'songLine'} ref={ref}>
             <div className={'songLinePosition'}>{position}</div>
             <div className={'songLineName'}>
-                <img src={songAvatarUrl} className={'songLineAvatar'} onError={(e) => {
+                <img src={songAvatarUrl} className={'songLineAvatar'} loading={'lazy'} onError={(e) => {
                     e.target.onError = null;
                     e.target.src = `${import.meta.env.BASE_URL}/vite.svg`
                 }} alt=""/>
