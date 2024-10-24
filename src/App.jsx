@@ -97,7 +97,7 @@ function App() {
 
     return (
         <>
-            <div className={'background'} />
+            <div className={'background'} style={{backgroundImage: `${import.meta.env.BASE_URL}/image_2024-10-24_22-40-36.png`}}/>
             <div className={'root'}>
                 <div className={'songList'}>
                     <div className={'songListHeader'}>
