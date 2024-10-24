@@ -47,6 +47,10 @@ function App() {
                 const senderName = message?.from?.first_name || message?.from?.username || '';
                 let rating = message?.text?.replaceAll(',', '.').replace(/[^0-9.]/g, '');
 
+                if (!songName) {
+                    return acc;
+                }
+
                 if (!Number.isNaN(rating)) {
                     const ratingFormatted = Number(rating);
                     if (ratingFormatted > 10) {
