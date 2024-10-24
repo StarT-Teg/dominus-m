@@ -5,6 +5,18 @@
     text-align: center;
 }
 
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #2B2B2B;
+    opacity: 0.8;
+}
+
 .songList {
     position: relative;
     display: flex;
@@ -74,7 +86,7 @@
     height: 60px;
 
     background-color: #2B2B2B;
-    border-radius: 100%;
+    border-radius: 20px;
 }
 
 .songLineName {
@@ -94,8 +106,8 @@
     justify-self: center;
 
     font-family: Space Mono, monospace;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 500;
     line-height: 22px;
     text-align: left;
     color: #FFFFFF;
