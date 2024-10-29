@@ -99,32 +99,28 @@ function App() {
         <>
             <div className={'background'} style={{backgroundImage: `${import.meta.env.BASE_URL}/image_2024-10-24_22-40-36.png`}}/>
             <div className={'root'}>
-                <div className={'songList'}>
-                    <div className={'songListHeader'}>
-                        <div style={{padding: '0 10px', cursor: 'pointer'}} onClick={() => {
-                            setSortType('songNumber')
-                        }}>#
-                        </div>
-                        <div>Song</div>
-                        <div style={{cursor: 'pointer'}} onClick={() => {
-                            setSortType('rating')
-                        }}>Rating
-                        </div>
+                <div className={'songListHeader'}>
+                    <div style={{padding: '0 10px', cursor: 'pointer'}} onClick={() => {
+                        setSortType('songNumber')
+                    }}>#
                     </div>
-
-                    <FlipMove typeName={null}>
-                        {songList.map((songName) => {
-                            const songPosition = songListInitialOrder.findIndex((songNameFromList => songNameFromList === songName)) + 1
-                            const ratingList = Object.keys(commentsData[songName])
-                            const averageRating = ratingList.reduce((acc, senderName) => acc + commentsData[songName][senderName], 0) / ratingList.length
-                            const ratingRound = Math.round((averageRating + Number.EPSILON) * 100) / 100
-
-                            return (
-                                <SongLine songName={songName} position={songPosition} key={songName} rating={ratingRound}/>)
-                        })}
-                    </FlipMove>
-
+                    <div>Song</div>
+                    <div style={{cursor: 'pointer'}} onClick={() => {
+                        setSortType('rating')
+                    }}>Rating
+                    </div>
                 </div>
+                <FlipMove className={'songList'}>
+                    {songList.map((songName) => {
+                        const songPosition = songListInitialOrder.findIndex((songNameFromList => songNameFromList === songName)) + 1
+                        const ratingList = Object.keys(commentsData[songName])
+                        const averageRating = ratingList.reduce((acc, senderName) => acc + commentsData[songName][senderName], 0) / ratingList.length
+                        const ratingRound = Math.round((averageRating + Number.EPSILON) * 100) / 100
+
+                        return (
+                            <SongLine songName={songName} position={songPosition} key={songName} rating={ratingRound}/>)
+                    })}
+                </FlipMove>
                 <div className={'refreshIcon'} onClick={() => {
                     refetch()
                 }}>
