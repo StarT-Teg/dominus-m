@@ -101,8 +101,8 @@ function App() {
 
         if (sortType === 'rating') {
             setSongList(newSongList.sort((songNameA, songNameB) => {
-                const a = Object.values(MOCK_RATING[songNameA]).reduce((acc, rate) => acc + rate, 0);
-                const b = Object.values(MOCK_RATING[songNameB]).reduce((acc, rate) => acc + rate, 0);
+                const a = Object.values(MOCK_RATING[songNameA]).reduce((acc, rate) => acc + rate, 0) / MOCK_RATING[songNameA].length;
+                const b = Object.values(MOCK_RATING[songNameB]).reduce((acc, rate) => acc + rate, 0) / MOCK_RATING[songNameB].length;
 
                 return b - a;
             }))
