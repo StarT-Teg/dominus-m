@@ -30,7 +30,8 @@ const getSongNameFromText = (text) => {
 }
 
 function App() {
-    const {data, refetch} = useGetData();
+    const [offset, setOffset] = useState(0)
+    const {data, refetch} = useGetData(offset);
 
     const [commentsData, setCommentsData] = useState({});
     const songListInitialOrder = Object.keys(commentsData || {})
@@ -38,41 +39,47 @@ function App() {
     const [songList, setSongList] = useState([])
 
     useEffect(() => {
-        setCommentsData(data?.result?.reduce((acc, updateData) => {
+        setCommentsData((prevState => (
+            {...prevState, ...data?.result?.reduce((acc, updateData) => {
 
-            const message = updateData?.edited_message || updateData?.message
+                    const message = updateData?.edited_message || updateData?.message
 
-            if (!!message?.reply_to_message) {
-                const songName = getSongNameFromText(message?.reply_to_message?.text || message?.reply_to_message?.caption);
-                const senderName = message?.from?.first_name || message?.from?.username || '';
-                let rating = message?.text?.replaceAll(',', '.').replace(/[^0-9.]/g, '');
+                    if (!!message?.reply_to_message) {
+                        const songName = getSongNameFromText(message?.reply_to_message?.text || message?.reply_to_message?.caption);
+                        const senderName = message?.from?.first_name || message?.from?.username || '';
+                        let rating = message?.text?.replaceAll(',', '.').replace(/[^0-9.]/g, '');
 
-                if (!songName) {
-                    return acc;
-                }
+                        if (!songName) {
+                            return acc;
+                        }
 
-                if (!Number.isNaN(rating)) {
-                    const ratingFormatted = Number(rating);
-                    if (ratingFormatted > 10) {
-                        rating = 10;
-                    } else if (ratingFormatted < 0) {
-                        rating = 0;
-                    } else {
-                        rating = ratingFormatted;
+                        if (!Number.isNaN(rating)) {
+                            const ratingFormatted = Number(rating);
+                            if (ratingFormatted > 10) {
+                                rating = 10;
+                            } else if (ratingFormatted < 0) {
+                                rating = 0;
+                            } else {
+                                rating = ratingFormatted;
+                            }
+                        } else {
+                            return acc;
+                        }
+
+                        return {
+                            ...acc, [songName]: {
+                                ...acc?.[songName], [senderName]: rating,
+                            }
+                        }
                     }
-                } else {
+
                     return acc;
-                }
+                }, {})}
+        )))
 
-                return {
-                    ...acc, [songName]: {
-                        ...acc?.[songName], [senderName]: rating,
-                    }
-                }
-            }
-
-            return acc;
-        }, {}))
+        if (data?.result?.length >= 100) {
+            setOffset(data?.result?.[99]?.update_id + 1)
+        }
     }, [data])
 
     useEffect(() => {
