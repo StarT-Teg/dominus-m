@@ -43,7 +43,7 @@ function App() {
             const message = updateData?.edited_message || updateData?.message
 
             if (!!message?.reply_to_message) {
-                const songName = getSongNameFromText(message?.reply_to_message?.text);
+                const songName = getSongNameFromText(message?.reply_to_message?.text || message?.reply_to_message?.caption);
                 const senderName = message?.from?.first_name || message?.from?.username || '';
                 let rating = message?.text?.replaceAll(',', '.').replace(/[^0-9.]/g, '');
 
